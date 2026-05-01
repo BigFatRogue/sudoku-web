@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/authentication.css') }}">
+    <title>Авторизация</title>
+</head>
+<body>
+    <main>
+        <div class="content">
+            <div class="tab">
+                <button class="tab-links" id="tab-left">Авторизация</button>
+                <button class="tab-links" id="tab-right">Регистрация</button>
+            </div>
+            <div id="msg-info">Пользователь на найден</div>
+            <div id="authentication" class="tab-content" style="display: block">
+                <form action="api/v1/auth/auth" method="post" id="form-auth">
+                    <table id="table-authentication" class="table">
+                        <tr><td><input class="enter-info" type="email" name="email" value="" placeholder="email" required/></td></tr>
+                        <tr><td><input class="enter-info" type="Password" name="password" value="" placeholder="Пароль" required/></td></tr>
+                        <tr><td><input class="submit-info" type="submit" value="Войти"/></td></tr>
+                    </table>
+                </form>
+            </div>
+            <div id="registration" class="tab-content">
+                <form action="api/v1/auth/registration" method="post" id="form-registration">
+                    <table id="table-registration" class="table">
+                        <tr><td><input class="enter-info" type="email" name="email" value="" placeholder="email" required/></td></tr>
+                        <tr><td><input class="enter-info" type="Password" name="password" value="" placeholder="Придумайте пароль" required/></td></tr>
+                        <tr><td><input class="enter-info" type="Password" name="password_repet" value="" placeholder="Повторите пароль" required/></td></tr>
+                        <tr><td><input class="submit-info" type="submit" value="Зарегистрироваться"/></td></tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <script src="{{ url_for('static', path='js/authentication.js') }}" type="module"></script>
+    </main>
+</body>
+</html>

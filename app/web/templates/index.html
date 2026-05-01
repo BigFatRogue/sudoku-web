@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <title>Solver Sudoku</title>
+</head>
+<body>
+    <header>
+        <div class="header-block">
+            <div class="header-label">Sudoku</div>
+            <div class="block-header-button">
+                <button data-mode="1" class="header-button activated">Классический</button>
+                <button data-mode="2" class="header-button">Решать</button>
+            </div>
+            <div id="user-account">
+                <span id="username"></span>
+                <a id="link-auth" href="/login">[Авторизация]</a>
+                <span id="link-logout" href="/api/v1/logout">[Выйти]</span>
+            </a>
+        </div>
+
+    </header>
+    <main>
+        <div data-mode="1" class="menu is-active">
+            <div class="menu-mode">
+                <div class="custom-list">
+                    <div class="custom-list-title">
+                        Выбрать судоку...
+                    </div>
+                    
+                    <div class="dropdown-list">
+                        <table class="custom-select-table">
+                            <thead>
+                                <td>№</td>
+                                <td>Сложность</td>
+                                <td>Время</td>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="menu-timer">
+                <button id="btn-timer"></button>
+                <span id="clock-face">00:00</span>
+            </div>
+        </div>
+        <div data-mode="2" class="menu">
+            <button id="btn-solving" data-status="0">Решить</button>
+        </div>
+        <div id="block-sudoku">
+            <table id="sudoku-table">
+            </table>
+        </div>
+    </main>
+    
+    <script src="{{ url_for('static', path='js/script.js') }}" type="module"></script>
+</body>
+</html>
