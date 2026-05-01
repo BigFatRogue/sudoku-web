@@ -1,0 +1,118 @@
+main {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    width: 300px;
+}
+
+.tab {
+    overflow: hidden;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.tab button {
+    font-family: 'Trebuchet MS';
+    color: white;
+    width: 50%;
+    background: #2c3e50;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.5s;
+}
+
+.tab button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    color: black;
+}
+
+#tab-left {
+    border-top-left-radius: 5px;
+}
+#tab-right {
+    border-top-right-radius: 5px;
+}
+
+.tab button.active {
+    background-color: white;
+    color: black;
+    border: 1px solid #aeaeae;
+    border-bottom: none;
+}
+
+.tab-content {
+    background-color: white;
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #aeaeae;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.table {
+    width: 100%;
+}
+
+.enter-info {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.submit-info {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    border: 0;
+    padding: 10px;
+    margin-top: 5px;
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.submit-info:hover {
+    background: #60c062;
+}
+
+.title-auth {
+    display: flex;
+    justify-content: center;
+    font-size: 14pt;
+    font-family: 'Trebuchet MS';
+    margin-bottom: 10px;
+}
+
+#msg-info {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #aeaeae;
+    padding: 10px;
+    color: white;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+}
+
+#msg-info.succses {
+    background-color: #60c062;
+}
+
+#msg-info.error {
+    background-color: rgb(172, 73, 73);
+}

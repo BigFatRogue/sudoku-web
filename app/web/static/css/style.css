@@ -1,0 +1,242 @@
+:root {
+    --table-size: 450px;
+    --height-header: 50px;
+    --height-menu: 25px;
+    --size-btn-timer: 15px;
+}
+
+* {
+    font-family:'Courier New', Courier, monospace;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    width: 100%;
+    height: var(--height-header);
+    border-bottom: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-block {
+    width: var(--table-size);
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+}
+
+.header-label {
+    margin-right: 10px;
+    font-size: 36pt;
+}
+
+
+main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.menu {
+    display: none;
+    height: var(--height-menu);
+}
+
+.menu > :nth-child(n) {
+    padding-right: 5px;
+}
+
+.menu.is-active {
+    display: flex;
+    flex-direction: row;
+    width: var(--table-size);
+    justify-content: start;
+    margin-bottom: 5px;
+}
+
+.menu.is-active > :last-child {
+    margin-left: auto;
+    visibility: visible;
+}
+
+.menu-timer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#btn-timer {
+    border: none;
+    height: var(--size-btn-timer);
+    width: var(--size-btn-timer);
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0);
+    background-size: var(--size-btn-timer) var(--size-btn-timer);
+}
+
+
+/* ----------------- DropDown Custom List ----------------- */
+.custom-list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.custom-list-title {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 1px;
+    color: gray
+}
+
+.custom-list-title:hover {
+    cursor: pointer;
+    background-color: beige;
+}
+
+.dropdown-list {
+
+    display: none;
+    background-color: white;
+    border: 1px solid black;
+    padding: 2px;
+    z-index: 999;
+    position: absolute;
+    top: var(--height-menu);
+    width: 270px;
+    max-height: 250px;
+    overflow:auto
+}
+
+.custom-select-table {
+    border-collapse: collapse;
+    width: 250px;
+}
+
+.custom-select-table thead {
+    height: 25px;
+    background-color:bisque;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    width: 250px;
+}
+
+.custom-select-table td {
+    text-align: center;
+    padding: 4px;
+    border-bottom: 1px solid gray;
+}
+
+.custom-select-table tbody > tr:hover {
+    background-color: beige;
+    cursor: pointer;
+}
+
+.custom-select-table tbody > tr.active {
+    background-color:aquamarine;
+}
+/* ------------------------------- ----------------- */
+
+#sudoku-table {
+    width: var(--table-size);
+    height: var(--table-size);
+    border: 2px solid black;
+    border-collapse: collapse;
+    z-index: 10;
+}
+
+#sudoku-table > tr:nth-child(3n) {
+    border-bottom: 2px solid black;
+}
+
+#sudoku-table > tr > td:nth-child(3n) {
+    border-right: 2px solid black;
+}
+
+.cell {
+    width: 50;
+    height: 50;
+    border: 1px solid black;
+    font-size: 20pt;
+    text-align: center;
+    cursor: default;
+    padding: 0px;
+    z-index: 10;
+}
+
+.cell > :first-child {
+    padding: 0px;
+}
+
+.cell[contenteditable=true] {
+    text-align: center;
+    outline: none;
+    caret-color: transparent;
+    /* vertical-align:middle; */   
+}
+
+.cell.freezed {
+    background-color: rgb(240, 240, 240);
+}
+
+.cell.active {
+    background-color:bisque;
+}
+
+.cell.active-line {
+    background-color: beige;
+}
+
+.cell.is-choose {
+    background-color: blanchedalmond;
+}
+
+.block-header-button {
+    display: flex;
+    height: var(--height-header);
+    padding: 0;
+} 
+
+.header-button {
+    background-color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    height: 100%;
+    margin: 0;
+}
+
+
+.header-button.activated,
+.header-button:hover {
+    background-color:beige;
+    border-bottom: 2px solid black;
+}
+
+
+
+
+#user-account {
+    position: relative;
+    font-size: 10pt;
+    margin-left: auto;
+}
+
+#link-logout {
+    text-decoration: underline;
+    color: blue;
+    top: 40px;
+    cursor: pointer;
+}
+
+a:visited {
+  color: blue;
+}
+
