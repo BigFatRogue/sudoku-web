@@ -1,0 +1,97 @@
+# Sudoku Web
+
+
+## Инициализация БД
+1. <code>>> python app/db/create_db.py</code>
+2. <code>>> alembic upgrade head</code>
+3. <code>>> python app/db/seed_db.py</code>
+
+## Запуск
+- <code>python run.py</code>
+
+## Схема проекта (endpoints)
+### *WEB эндпоинты (публичные)*
+
+| Метод  | Маршрут  | Описание             |
+| :----- | :------- | :------------------- |
+| `GET`  | `/`      | Главная страница     |
+| `POST` | `/login` | Страница авторизации |
+
+
+### *Auth эндпоинты (авторизация)*
+
+| Метод  | Маршрут                     | Описание                                              |
+| :----- | :-------------------------- | :---------------------------------------------------- |
+| `POST` | `/api/v1/auth/user`         | Проверка и создания пользователя статуса пользователю |
+| `POST` | `/api/v1/auth/auth`         | Авторизация пользователя                              |
+| `POST` | `/api/v1/auth/registration` | Регистрация  пользователя                             |
+| `POST` | `/api/v1/auth/logout`       | Выход пользователя                                    |
+
+### *User эндпоинты (авторизация)*
+
+| Метод    | Маршрут                  | Описание                                    |
+| :------- | :----------------------- | :------------------------------------------ |
+| `POST`   | `/api/v1/user/me`        | Получение информации о текущем пользователе |
+| `DELETE` | `/api/v1/user/{user_id}` | Удаление пользователя                       |
+| `PATCH`  | `/api/v1/user/{user_id}` | Обновление статуса пользователя             |
+
+
+### *Sudoku эндпоинты (бизнес логика)*
+
+| Метод  | Маршрут                                         | Описание                                |
+| :----- | :---------------------------------------------- | :-------------------------------------- |
+| `GET`  | `/api/v1/sudoku/sudoku`                         | Получение судоку по ИД                  |
+| `GET`  | `/api/v1/sudoku/all`                            | Список всех судоку                      |
+| `GET`  | `/api/v1/sudoku/list_user`                      | Список текущего пользователя            |
+| `GET`  | `/api/v1/sudoku/active_sudoku_user/{sudoku_id}` | Получение активного судоку пользователя |
+| `POST` | `/api/v1/sudoku/update_solution`                | Обновить решение пользователя           |
+
+
+### Матрица доступа (Роли)
+
+| Метод    | Маршрут                             | Guest | User | Admin |
+| :------- | :---------------------------------- | :---: | :--: | :---: |
+| `POST`   | `/api/v1/auth/user`                 |  ✅   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/auth/auth`                 |  ✅   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/auth/registartion`         |  ✅   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/auth/logout`               |  ❌   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/user/me`                   |  ✅   |  ✅  |  ✅   |
+| `DELETE` | `/api/v1/user/{user_id}`            |  ❌   |  ❌  |  ✅   |
+| `PATCH`  | `/api/v1/user/{user_id}`            |  ❌   |  ❌  |  ✅   |
+| `GET`    | `/api/v1/sudoku/sudoku`             |  ❌   |  ❌  |  ✅   |
+| `GET`    | `/api/v1/sudoku/all`                |  ❌   |  ❌  |  ✅   |
+| `GET`    | `/api/v1/sudoku/list_user`          |  ✅   |  ✅  |  ✅   |
+| `GET`    | `/api/v1/sudoku/active_sudoku_user` |  ✅   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/sudoku/update_solution`    |  ✅   |  ✅  |  ✅   |
+
+---
+
+### Схема управления доступом
+
+Авторизация выполнена на cookie.
+| Cookie         | Кто                         | Срок жизни |
+| -------------- | --------------------------- | ---------- |
+| `guest_uuid`   | Неавторизованный гость      | 30 дней    |
+| `session_uuid` | Авторизованный пользователь | 30 дней    |
+
+При первом посещении автоматически выдается `guest_uuid` и роль `guest`. После входа в систему `guest_uuid` заменяется на `session_uuid` и роль `user`.
+
+#### Схема доступа ролей
+| Метод    | Маршрут                             | Guest | User | Admin |
+| :------- | :---------------------------------- | :---: | :--: | :---: |
+| `POST`   | `/api/v1/auth/user`                 |  ✅   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/auth/auth`                 |  ✅   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/auth/registartion`         |  ✅   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/auth/logout`               |  ❌   |  ❌  |  ✅   |
+| `POST`   | `/api/v1/user/me`                   |  ✅   |  ✅  |  ✅   |
+| `DELETE` | `/api/v1/user/{user_id}`            |  ❌   |  ❌  |  ✅   |
+| `PATCH`  | `/api/v1/user/{user_id}`            |  ❌   |  ❌  |  ✅   |
+| `GET`    | `/api/v1/sudoku/sudoku`             |  ❌   |  ❌  |  ✅   |
+| `GET`    | `/api/v1/sudoku/all`                |  ❌   |  ❌  |  ✅   |
+| `GET`    | `/api/v1/sudoku/list_user`          |  ✅   |  ✅  |  ✅   |
+| `GET`    | `/api/v1/sudoku/active_sudoku_user` |  ✅   |  ✅  |  ✅   |
+| `POST`   | `/api/v1/sudoku/update_solution`    |  ✅   |  ✅  |  ✅   |
+
+
+Полная документация API доступна после запуска по адресу:  
+`http://localhost:8000/docs` (Swagger UI)
