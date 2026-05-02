@@ -23,4 +23,3 @@ def get_user_uuid(request: Request) -> UserUuidContext | None:
     return None
 
 UserUuidDep = Annotated[UserUuidContext, Depends(get_user_uuid)]
-

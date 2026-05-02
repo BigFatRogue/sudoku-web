@@ -126,7 +126,7 @@ async def registration(
         )
 async def loguot(user_uuid: UserUuidDep, response: Response, session: SessionDep) -> dict[str, bool]:
     if user_uuid is None or user_uuid.type != UuidEnum.session_uuid:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Пользователь не был авторизован')
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     
     is_session_del = await AuthRepository.logout(session_uuid=user_uuid.uuid, session=session)
     if is_session_del:

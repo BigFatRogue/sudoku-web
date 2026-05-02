@@ -17,7 +17,10 @@ pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 class AuthRepository:
     @classmethod
-    async def get_user(cls, uuid: str, type_uuid: str, session: SessionDep) -> UserModel | None:
+    async def get_user(cls, uuid: str | None, type_uuid: str, session: SessionDep) -> UserModel | None:
+        if not uuid:
+            return
+        
         if type_uuid == UuidEnum.guest_uuid:
             user = await AuthRepository.get_user_form_guest_uuid(guest_uuid=uuid, session=session)
             return user

@@ -63,10 +63,16 @@ async def get_solution(sudoku: str, session: SessionDep, sudoku_id: int | None =
 
 @sudoku_router.get(
         path='/list_user', 
-        summary='Получения списка судоку пользователя',
+        summary='Получения списка судоку текущем пользователем',
         description='Получения списка всех судоку с учётом затраченного времени пользователем на их решения')
 async def get_sudoku_me(user_uuid: UserUuidDep, session: SessionDep) -> list[ResponeSolutionScheme]:
+    if not user_uuid:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
     user = await AuthRepository.get_user(uuid=user_uuid.uuid, type_uuid=user_uuid.type, session=session)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    
     list_sudoku = await SudokuRepository.get_user_solutions(user=user, session=session)
 
     response: list[ResponeSolutionScheme] = []
@@ -79,8 +85,10 @@ async def get_sudoku_me(user_uuid: UserUuidDep, session: SessionDep) -> list[Res
                 is_active=sudoku_context.is_active
             )
         )
-    
+        
     return response
+        
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
 
 @sudoku_router.get(
@@ -88,8 +96,12 @@ async def get_sudoku_me(user_uuid: UserUuidDep, session: SessionDep) -> list[Res
         summary='Получения решения пользователя'
         )
 async def get_active_sudoku_user(sudoku_id: int, user_uuid: UserUuidDep, session: SessionDep) -> ResponeSolutionScheme:
-    user = await AuthRepository.get_user(uuid=user_uuid.uuid, type_uuid=user_uuid.type, session=session)
+    if not user_uuid:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
+    user = await AuthRepository.get_user(uuid=user_uuid.uuid, type_uuid=user_uuid.type, session=session)
+    if not user:   
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)         
     solution_user: SolutionUserContext = await SudokuRepository.set_active_sudoku_user(user=user, sudoku_id=sudoku_id, session=session)
 
     return ResponeSolutionScheme(
@@ -97,9 +109,8 @@ async def get_active_sudoku_user(sudoku_id: int, user_uuid: UserUuidDep, session
         sudoku=solution_user.sudoku, 
         solution=solution_user.solution,
         solving_time=solution_user.solving_time,
-        is_active=True
-        )
-
+        is_active=True)
+    
 
 @sudoku_router.post(
         path='/update_solution',
@@ -108,11 +119,16 @@ async def update_solution(
     user_uuid: UserUuidDep, 
     solution_data: ResponeSolutionScheme, 
     session: SessionDep) -> dict[str, int]:
+    
+    if not user_uuid:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    
     user = await AuthRepository.get_user(uuid=user_uuid.uuid, type_uuid=user_uuid.type, session=session)
-
-    if user: 
-        await SudokuRepository.update_solution_user(user=user, solution_data=solution_data,session=session)
-        return {'succses': True}
-
-    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Пользователь не авторизован')
+    if not user: 
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    
+    await SudokuRepository.update_solution_user(user=user, solution_data=solution_data,session=session)
+    return {'succses': True}
+    
+    
 

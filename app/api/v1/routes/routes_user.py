@@ -33,6 +33,9 @@ async def check_auth(user_uuid: UserUuidDep, session: SessionDep) -> UserScheme:
     path='/{user_id}', 
     summary='Удаление пользователя')
 async def delete_user(user_id: int, user_uuid: UserUuidDep, session: SessionDep) -> dict[str, str | bool]:
+    if not user_uuid:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    
     if user_uuid.type == UuidEnum.guest_uuid:
         user = await AuthRepository.get_user_form_guest_uuid(guest_uuid=user_uuid.uuid, session=session)
     else:
@@ -51,8 +54,11 @@ async def delete_user(user_id: int, user_uuid: UserUuidDep, session: SessionDep)
 
 @users_router.patch(
     path='/{user_id}', 
-    summary='Изменения статуса активности пользователя')
+    summary='Обновления статуса пользователя')
 async def delete_user(user_id: int, is_active: bool, user_uuid: UserUuidDep, session: SessionDep) -> dict[str, str | bool]:
+    if not user_uuid:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
     if user_uuid.type == UuidEnum.guest_uuid:
         user = await AuthRepository.get_user_form_guest_uuid(guest_uuid=user_uuid.uuid, session=session)
     else:
