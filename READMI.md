@@ -46,24 +46,6 @@
 | `GET`  | `/api/v1/sudoku/active_sudoku_user/{sudoku_id}` | Получение активного судоку пользователя |
 | `POST` | `/api/v1/sudoku/update_solution`                | Обновить решение пользователя           |
 
-
-### Матрица доступа (Роли)
-
-| Метод    | Маршрут                             | Guest | User | Admin |
-| :------- | :---------------------------------- | :---: | :--: | :---: |
-| `POST`   | `/api/v1/auth/user`                 |  ✅   |  ✅  |  ✅   |
-| `POST`   | `/api/v1/auth/auth`                 |  ✅   |  ✅  |  ✅   |
-| `POST`   | `/api/v1/auth/registartion`         |  ✅   |  ✅  |  ✅   |
-| `POST`   | `/api/v1/auth/logout`               |  ❌   |  ✅  |  ✅   |
-| `POST`   | `/api/v1/user/me`                   |  ✅   |  ✅  |  ✅   |
-| `DELETE` | `/api/v1/user/{user_id}`            |  ❌   |  ❌  |  ✅   |
-| `PATCH`  | `/api/v1/user/{user_id}`            |  ❌   |  ❌  |  ✅   |
-| `GET`    | `/api/v1/sudoku/sudoku`             |  ❌   |  ❌  |  ✅   |
-| `GET`    | `/api/v1/sudoku/all`                |  ❌   |  ❌  |  ✅   |
-| `GET`    | `/api/v1/sudoku/list_user`          |  ✅   |  ✅  |  ✅   |
-| `GET`    | `/api/v1/sudoku/active_sudoku_user` |  ✅   |  ✅  |  ✅   |
-| `POST`   | `/api/v1/sudoku/update_solution`    |  ✅   |  ✅  |  ✅   |
-
 ---
 
 ### Схема управления доступом
