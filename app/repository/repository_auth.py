@@ -62,7 +62,8 @@ class AuthRepository:
         guest = UserModel(uuid=guest_uuid, role_id=guest_role_id.one()[0])
         
         session.add(guest)
-        session.refresh(guest)
+        await session.commit()
+        await session.refresh(guest)
         
         result_sudoku = await session.execute(select(SudokuModel.sudoku_id, SudokuModel.sudoku))
         sudoku_id, sudoku = random.choice(result_sudoku.all())
@@ -98,6 +99,7 @@ class AuthRepository:
         """
         Получения модели пользователя через email
         """
+
         query = select(UserModel).where(UserModel.email == user_email)
         result = await session.execute(query)
 
